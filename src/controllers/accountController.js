@@ -88,14 +88,6 @@ class AccountController {
       const userId = req.auth.sub;
       const { amount, description } = req.body;
 
-      // Validate amount
-      if (!amount || amount <= 0) {
-        return res.status(400).json({
-          error: 'Bad Request',
-          message: 'Amount must be greater than 0'
-        });
-      }
-
       // Get account and verify ownership
       const account = await Account.findById(accountId);
 
@@ -151,14 +143,6 @@ class AccountController {
       const accountId = parseInt(req.params.id);
       const userId = req.auth.sub;
       const { amount, description } = req.body;
-
-      // Validate amount
-      if (!amount || amount <= 0) {
-        return res.status(400).json({
-          error: 'Bad Request',
-          message: 'Amount must be greater than 0'
-        });
-      }
 
       // Get account and verify ownership
       const account = await Account.findById(accountId);

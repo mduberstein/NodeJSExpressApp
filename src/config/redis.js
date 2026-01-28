@@ -1,6 +1,9 @@
 const redis = require('redis');
 require('dotenv').config();
 
+const pool = require('../config/database');
+require('dotenv').config();
+
 const redisClient = redis.createClient({
   socket: {
     host: process.env.REDIS_HOST || 'localhost',
@@ -23,4 +26,12 @@ const connectRedis = async () => {
   }
 };
 
-module.exports = { redisClient, connectRedis };
+// Graceful shutdown
+const closeRedis = async () => {
+  if (redisClient.isOpen) {
+    await redisClient.quit();
+    console.log('Redis connection closed');
+  }
+};
+
+module.exports = { redisClient, connectRedis, closeRedis };

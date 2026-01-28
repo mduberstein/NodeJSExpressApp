@@ -6,7 +6,8 @@ require('dotenv').config();
 
 const { optionalAuth } = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
-const { connectRedis } = require('./config/redis');
+const { connectRedis, closeRedis } = require('./config/redis');
+const pool = require('./config/database');
 const indexRoutes = require('./routes/index');
 const accountRoutes = require('./routes/accounts');
 
@@ -36,6 +37,26 @@ app.use('/api/accounts', optionalAuth, accountRoutes);
 // Error handling middleware (must be last)
 app.use(errorHandler);
 
+// Graceful shutdown handler
+const gracefulShutdown = async (signal) => {
+  console.log(`\n${signal} received, shutting down gracefully...`);
+  
+  try {
+    // Close Redis connection
+    await closeRedis();
+    
+    // Close database pool
+    await pool.end();
+    console.log('Database connection closed');
+    
+    console.log('Shutdown complete');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error during shutdown:', error);
+    process.exit(1);
+  }
+};
+
 // Initialize connections and start server
 const startServer = async () => {
   try {
@@ -49,8 +70,8 @@ const startServer = async () => {
 ╔════════════════════════════════════════════════════════════╗
 ║                    Banking API Server                      ║
 ║                                                            ║
-║  Server is running on port ${PORT}                          ║
-║  Environment: ${process.env.NODE_ENV || 'development'}                              ║
+║  Server is running on port ${PORT}                           ║
+║  Environment: ${process.env.NODE_ENV || 'development'}                                ║
 ║                                                            ║
 ║  Endpoints:                                                ║
 ║  - GET  /                  - API information               ║
@@ -61,7 +82,7 @@ const startServer = async () => {
 ║  - POST /api/accounts/:id/withdraw  - Withdraw money       ║
 ║  - GET  /api/accounts/:id/transactions - Get transactions  ║
 ║                                                            ║
-║  Documentation: http://localhost:${PORT}                      ║
+║  Documentation: http://localhost:${PORT}                       ║
 ╚════════════════════════════════════════════════════════════╝
       `);
 
@@ -77,15 +98,8 @@ const startServer = async () => {
 };
 
 // Handle graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  process.exit(0);
-});
-
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  process.exit(0);
-});
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 startServer();
 
