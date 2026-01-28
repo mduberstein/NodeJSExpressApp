@@ -262,6 +262,10 @@ src/
 - **OAuth2/OIDC Authentication**: Token-based authentication using Auth0
 - **Helmet.js**: Security headers to protect against common vulnerabilities
 - **Input Validation**: Request validation using express-validator
+- **Rate Limiting**: Protects against brute force and DDoS attacks
+  - General API: 100 requests per 15 minutes per IP
+  - Write operations (deposit/withdraw): 20 requests per 15 minutes per IP
+  - Account creation: 5 requests per hour per IP
 - **CORS**: Configurable cross-origin resource sharing
 - **SQL Injection Protection**: Parameterized queries
 - **Transaction Isolation**: Database transactions prevent race conditions

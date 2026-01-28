@@ -3,6 +3,7 @@ const router = express.Router();
 const AccountController = require('../controllers/accountController');
 const { body, validationResult } = require('express-validator');
 const { cacheMiddleware } = require('../middleware/cache');
+const { strictLimiter, createAccountLimiter } = require('../middleware/rateLimiter');
 
 // Validation error handler middleware
 const handleValidationErrors = (req, res, next) => {
@@ -35,11 +36,11 @@ const validateCreateAccount = [
   handleValidationErrors
 ];
 
-// Routes
-router.post('/', validateCreateAccount, AccountController.createAccount);
+// Routes with rate limiting
+router.post('/', createAccountLimiter, validateCreateAccount, AccountController.createAccount);
 router.get('/:id', cacheMiddleware(300), AccountController.getAccount);
-router.post('/:id/deposit', validateDeposit, AccountController.deposit);
-router.post('/:id/withdraw', validateWithdraw, AccountController.withdraw);
+router.post('/:id/deposit', strictLimiter, validateDeposit, AccountController.deposit);
+router.post('/:id/withdraw', strictLimiter, validateWithdraw, AccountController.withdraw);
 router.get('/:id/transactions', cacheMiddleware(60), AccountController.getTransactions);
 
 module.exports = router;

@@ -7,6 +7,7 @@ require('dotenv').config();
 const { optionalAuth } = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
 const { connectRedis, closeRedis } = require('./config/redis');
+const { apiLimiter } = require('./middleware/rateLimiter');
 const pool = require('./config/database');
 const indexRoutes = require('./routes/index');
 const accountRoutes = require('./routes/accounts');
@@ -17,6 +18,9 @@ const PORT = process.env.PORT || 3000;
 // Security middleware
 app.use(helmet());
 app.use(cors());
+
+// Rate limiting for all API routes
+app.use('/api/', apiLimiter);
 
 // Body parser middleware
 app.use(bodyParser.json());
