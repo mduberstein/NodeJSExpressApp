@@ -1,9 +1,10 @@
-# Banking API - Node.js Express Application
+# Banking Application - Full Stack Node.js & React
 
-A secure RESTful banking API built with Node.js, Express, PostgreSQL, and Redis, featuring OAuth2/OIDC authentication.
+A complete banking application with a secure RESTful API backend built with Node.js, Express, PostgreSQL, and Redis, plus a modern React frontend for managing banking operations.
 
 ## Features
 
+### Backend API
 - 🏦 **Banking Operations**: Create accounts, deposit, and withdraw funds
 - 🔐 **OAuth2/OIDC Authentication**: Secure API endpoints using Auth0
 - 🗄️ **PostgreSQL Database**: Persistent storage for accounts and transactions
@@ -11,6 +12,12 @@ A secure RESTful banking API built with Node.js, Express, PostgreSQL, and Redis,
 - 🛡️ **Security**: Helmet.js for security headers, input validation
 - 📝 **Transaction History**: Complete audit trail of all operations
 - 🔄 **ACID Transactions**: Database transactions ensure data consistency
+
+### React Frontend
+- 🎨 **Modern UI**: Beautiful, responsive React interface
+- 💰 **Deposit & Withdraw**: Easy-to-use forms for transactions
+- 📊 **Real-time Updates**: Live balance and transaction history
+- 🌍 **Multi-currency**: Support for USD, EUR, GBP, JPY, CAD
 
 ## Prerequisites
 
@@ -101,6 +108,26 @@ For production:
 ```bash
 npm start
 ```
+
+The server will start on `http://localhost:3000`
+
+### 7. Start the React Frontend (in a new terminal)
+
+```bash
+# Install client dependencies
+npm run client:install
+
+# Start the React development server
+npm run client
+```
+
+The React app will start on `http://localhost:5173` and will proxy API requests to the backend.
+
+You can now access the web interface at `http://localhost:5173` to:
+- Create a new account
+- Make deposits
+- Make withdrawals
+- View transaction history
 
 The server will start on `http://localhost:3000`
 
@@ -298,6 +325,41 @@ Common HTTP status codes:
 - Transaction history is cached for 1 minute (60 seconds)
 - Cache is automatically invalidated on deposits/withdrawals
 - Redis caching improves performance for read-heavy operations
+
+## React Frontend
+
+The application includes a modern React frontend in the `client` directory that provides a user-friendly interface for all banking operations.
+
+### Screenshots
+
+#### Create Account Page
+![Create Account](https://github.com/user-attachments/assets/754a7131-7e3a-4183-a4db-2006865d94be)
+
+#### Account Dashboard
+![Account Dashboard](https://github.com/user-attachments/assets/d7062509-9c95-4974-943a-944fd60854ed)
+
+#### After Deposit
+![After Deposit](https://github.com/user-attachments/assets/a21db68f-32dd-4e15-a051-39137f972b17)
+
+#### After Withdrawal
+![After Withdrawal](https://github.com/user-attachments/assets/93f7141e-03a2-446e-97e5-bce1b9cb848d)
+
+### Features
+
+- **Account Creation**: Select currency and create a new account
+- **Deposits**: Add funds with optional descriptions
+- **Withdrawals**: Withdraw funds with optional descriptions
+- **Transaction History**: View all transactions with real-time balance updates
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- **Modern UI**: Beautiful gradient design with smooth animations
+
+### Technology Stack
+
+- **React 19**: Latest React framework
+- **Vite**: Fast build tool and development server
+- **CSS3**: Modern styling with gradients and animations
+
+For more details, see the [Client README](client/README-APP.md).
 
 ## Future Development
 
