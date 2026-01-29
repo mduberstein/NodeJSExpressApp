@@ -1,0 +1,37 @@
+.transaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.transaction-form .form-group {
+  text-align: left;
+}
+
+.transaction-form .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.btn-deposit {
+  background: #4caf50;
+  color: white;
+  margin-top: 5px;
+}
+
+.btn-deposit:hover {
+  background: #45a049;
+}
+
+.btn-withdraw {
+  background: #ff9800;
+  color: white;
+  margin-top: 5px;
+}
+
+.btn-withdraw:hover {
+  background: #fb8c00;
+}
