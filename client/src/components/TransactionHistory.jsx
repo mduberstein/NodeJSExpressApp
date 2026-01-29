@@ -8,35 +8,35 @@ function TransactionHistory({ accountId, userId, refreshTrigger }) {
   const [limit, setLimit] = useState(10);
 
   useEffect(() => {
-    fetchTransactions();
-  }, [accountId, refreshTrigger, limit]);
+    const fetchTransactions = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/accounts/${accountId}/transactions?limit=${limit}`,
+          {
+            headers: {
+              'X-User-Id': userId,
+            },
+          }
+        );
 
-  const fetchTransactions = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `/api/accounts/${accountId}/transactions?limit=${limit}`,
-        {
-          headers: {
-            'X-User-Id': userId,
-          },
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to fetch transactions');
         }
-      );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch transactions');
+        setTransactions(data.data);
+        setError('');
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setTransactions(data.data);
-      setError('');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchTransactions();
+  }, [accountId, userId, refreshTrigger, limit]);
 
   if (loading) {
     return <div className="loading">Loading transactions...</div>;

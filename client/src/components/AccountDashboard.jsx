@@ -11,31 +11,31 @@ function AccountDashboard({ accountId, userId, onLogout }) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
-    fetchAccount();
-  }, [accountId, refreshTrigger]);
+    const fetchAccount = async () => {
+      try {
+        const response = await fetch(`/api/accounts/${accountId}`, {
+          headers: {
+            'X-User-Id': userId,
+          },
+        });
 
-  const fetchAccount = async () => {
-    try {
-      const response = await fetch(`/api/accounts/${accountId}`, {
-        headers: {
-          'X-User-Id': userId,
-        },
-      });
+        const data = await response.json();
 
-      const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to fetch account');
+        }
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch account');
+        setAccount(data.data);
+        setError('');
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setAccount(data.data);
-      setError('');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchAccount();
+  }, [accountId, userId, refreshTrigger]);
 
   const handleTransactionSuccess = () => {
     setRefreshTrigger(prev => prev + 1);
