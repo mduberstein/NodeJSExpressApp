@@ -47,12 +47,23 @@
   border-color: #667eea;
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.button-group button {
+  flex: 1;
+  max-width: 200px;
+}
+
 .btn-primary {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 14px 28px;
   font-size: 1.1rem;
-  margin-top: 10px;
 }
 
 .btn-primary:hover {

@@ -18,6 +18,12 @@ class Account {
     return result.rows[0];
   }
 
+  static async findAllByUserId(userId) {
+    const query = 'SELECT * FROM accounts WHERE user_id = $1 ORDER BY created_at DESC';
+    const result = await pool.query(query, [userId]);
+    return result.rows;
+  }
+
   static async findById(id) {
     const query = 'SELECT * FROM accounts WHERE id = $1';
     const result = await pool.query(query, [id]);

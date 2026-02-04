@@ -37,6 +37,7 @@ const validateCreateAccount = [
 ];
 
 // Routes with rate limiting
+router.get('/', cacheMiddleware(60), AccountController.getAllAccounts);
 router.post('/', createAccountLimiter, validateCreateAccount, AccountController.createAccount);
 router.get('/:id', cacheMiddleware(300), AccountController.getAccount);
 router.post('/:id/deposit', strictLimiter, validateDeposit, AccountController.deposit);

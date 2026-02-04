@@ -8,15 +8,6 @@ class AccountController {
       const userId = req.auth.sub; // Get user ID from JWT token
       const { currency } = req.body;
 
-      // Check if user already has an account
-      const existingAccount = await Account.findByUserId(userId);
-      if (existingAccount) {
-        return res.status(409).json({
-          error: 'Conflict',
-          message: 'Account already exists for this user'
-        });
-      }
-
       // Generate account number
       const accountNumber = AccountController.generateAccountNumber();
 
@@ -36,6 +27,29 @@ class AccountController {
           status: account.status,
           createdAt: account.created_at
         }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Get all accounts for the authenticated user
+  static async getAllAccounts(req, res, next) {
+    try {
+      const userId = req.auth.sub;
+
+      const accounts = await Account.findAllByUserId(userId);
+
+      res.json({
+        data: accounts.map(account => ({
+          id: account.id,
+          accountNumber: account.account_number,
+          balance: account.balance,
+          currency: account.currency,
+          status: account.status,
+          createdAt: account.created_at,
+          updatedAt: account.updated_at
+        }))
       });
     } catch (error) {
       next(error);

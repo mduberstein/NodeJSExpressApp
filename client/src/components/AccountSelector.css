@@ -1,0 +1,166 @@
+.account-selector {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.account-selector h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2rem;
+}
+
+.no-accounts {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.no-accounts p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.no-accounts .subtitle {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.accounts-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.account-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.account-card:hover {
+  border-color: #4CAF50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+}
+
+.account-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.account-card-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-frozen {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.account-card-body {
+  margin-bottom: 1rem;
+}
+
+.balance-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.balance-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.balance-amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4CAF50;
+}
+
+.account-meta {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.account-card-footer {
+  text-align: right;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.select-hint {
+  color: #4CAF50;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.account-card:hover .select-hint {
+  opacity: 1;
+}
+
+.btn-create-account {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.loading,
+.error-container {
+  text-align: center;
+  padding: 3rem;
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .accounts-list {
+    grid-template-columns: 1fr;
+  }
+
+  .account-selector {
+    padding: 1rem;
+  }
+}

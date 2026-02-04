@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreateAccount.css';
 
-function CreateAccount({ userId, onAccountCreated }) {
+function CreateAccount({ userId, onAccountCreated, onCancel }) {
   const [currency, setCurrency] = useState('USD');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -59,9 +59,21 @@ function CreateAccount({ userId, onAccountCreated }) {
 
         {error && <div className="error-message">{error}</div>}
 
-        <button type="submit" disabled={loading} className="btn-primary">
-          {loading ? 'Creating Account...' : 'Create Account'}
-        </button>
+        <div className="button-group">
+          {onCancel && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="btn-secondary"
+              disabled={loading}
+            >
+              Cancel
+            </button>
+          )}
+          <button type="submit" disabled={loading} className="btn-primary">
+            {loading ? 'Creating Account...' : 'Create Account'}
+          </button>
+        </div>
       </form>
     </div>
   );
