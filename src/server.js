@@ -74,8 +74,8 @@ const startServer = async () => {
 ╔════════════════════════════════════════════════════════════╗
 ║                    Banking API Server                      ║
 ║                                                            ║
-║  Server is running on port ${PORT}                           ║
-║  Environment: ${process.env.NODE_ENV || 'development'}                                ║
+║  Server is running on port ${PORT}                         ║
+║  Environment: ${process.env.NODE_ENV || 'development'}     ║
 ║                                                            ║
 ║  Endpoints:                                                ║
 ║  - GET  /                  - API information               ║
@@ -86,7 +86,7 @@ const startServer = async () => {
 ║  - POST /api/accounts/:id/withdraw  - Withdraw money       ║
 ║  - GET  /api/accounts/:id/transactions - Get transactions  ║
 ║                                                            ║
-║  Documentation: http://localhost:${PORT}                       ║
+║  Documentation: http://localhost:${PORT}                   ║
 ╚════════════════════════════════════════════════════════════╝
       `);
 
